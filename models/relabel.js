@@ -4,13 +4,13 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const relabel = sequelize.define('relabel', {
-    id_manga: DataTypes.INTEGER,
-    id_label: DataTypes.INTEGER
+    mangaId: DataTypes.INTEGER,
+    labelId: DataTypes.INTEGER
   }, {});
   relabel.associate = function(models) {
     // associations can be defined here
-    relabel.belongsTo(models.manga, {foreignKey: 'id_manga'})
-    relabel.belongsTo(models.label, {foreignKey: 'id_label'})
+    relabel.belongsTo(models.manga, {foreignKey: 'mangaId'})
+    relabel.belongsTo(models.label, {foreignKey: 'labelId'})
   };
   return relabel;
 };

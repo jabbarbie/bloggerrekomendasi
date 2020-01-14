@@ -41,13 +41,13 @@ block content
      ol(reversed)
       each val, index in rekomendasi
        li
-        a(href='/manga/edit/' + val.manga.id)
-         = val.manga.judul
-        span(class='badge badge-sm badge-info ml-2')= val.manga.bookmark 
-        span(class='badge badge-sm badge-info ml-2')= (val.manga.rating / 100) 
-        if(val.manga.gambar == '') 
+        a(href='/manga/edit/' + val.mangaWithLabel.id)
+         = val.judul
+        span(class='badge badge-sm badge-info ml-2')= val.bookmark 
+        span(class='badge badge-sm badge-info ml-2')= (val.rating / 100) 
+        if(val.gambar == '') 
          span(class='badge badge-warning badge-sm text-white ml-1') !Pic 
-        if(val.manga.keterangan == '') 
+        if(val.keterangan == '') 
          span(class='badge badge-danger badge-sm text-white ml-1') !Ket
 
         if(index != 0)
@@ -62,35 +62,35 @@ block content
       &#13;&#10;
       ol(class="rekomendasi", reversed="")&#13;&#10;
        each r, index in rekomendasi
-        li= r.manga.judul 
+        li= r.judul 
         &#13;&#10;
-        = r.manga.keterangan
+        = r.keterangan
         &#13;&#10;
         div(id='detail')
          &#13;&#10;
-         img(class='lazy' data-src=r.manga.gambar src='https://4.bp.blogspot.com/-XVELyLZSaIU/XcMk8mvq7ZI/AAAAAAAAQNY/IzxmEpCaSNc5emnoGLAxldK8EBBqVfNVwCNcBGAsYHQ/s1600/putih.png')
+         img(class='lazy' data-src=r.gambar src='https://4.bp.blogspot.com/-XVELyLZSaIU/XcMk8mvq7ZI/AAAAAAAAQNY/IzxmEpCaSNc5emnoGLAxldK8EBBqVfNVwCNcBGAsYHQ/s1600/putih.png')
 
          br
 
          table(class='informasi', width='70%') &#13;&#10;
           tr &#13;&#10;
            td(width='30%') Alternative Name 
-           td= r.manga.alternative_name
+           td= r.alternative_name
           tr &#13;&#10;
            td Type
-           td= r.manga.type
+           td= r.type
           tr &#13;&#10;
            td Genre
-           td= r.manga.relabel
+           td= r.relabel
           tr &#13;&#10;
            td Chapter
-           td= r.manga.chapter
+           td= r.chapter
           tr &#13;&#10;
            td Review
-           td= r.manga.review
+           td= r.review
           tr &#13;&#10;
            td Rating
-           td= (r.manga.rating / 100)
+           td= (r.rating / 100)
 
           &#13;&#10;
          &#13;&#10;

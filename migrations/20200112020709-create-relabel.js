@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id_manga: {
+      mangaId: {
         type: Sequelize.INTEGER,
         foreignKey: true,
         references: {
@@ -16,7 +16,7 @@ module.exports = {
           key: 'id'
         }
       },
-      id_label: {
+      labelId: {
         type: Sequelize.INTEGER,
         foreignKey: true,
         references: {

@@ -35,18 +35,45 @@ router.post('/edit', async function(req, res){
 router.get('/(:id)', async function(req, res) {
 
 	const id = req.params.id
-	const manga = await model.manga.findAll({order: ['judul'], include: ['mr']})
+	const manga = await model.manga.findAll({order: ['judul']})
+	// const manga = await model.manga.findAll({order: ['judul'], include: ['mangaWithLabel']})
 	const artikel = await model.post.findOne({where: {id: id}})
 
-	// const rekomendasi = await model.rekomendasi.findAll({
-	// 	where: {id_artikel: id},
-	// 	order: [['posisi','DESC']],
-	// 	include: ['m']
-	// })
-	res.json(manga)
+	const a = await model.rekomendasi.findAll({
+		// attributes: ['artikelId','posisi','judul'],
+		where: {artikelId: id},
+		include: [
+			{ model: model.manga, as: 'rm' }
+		]
+	})
+	res.json(a)
 	return
+	const rekomendasi = await model.manga.findAll({
+		where: {
+			id : 1
+		},
 
-	console.log(rekomendasi);
+		order: ['judul'], 
+		include: ['mangaWithLabel']
+		// include: [
+		// 	{
+		// 		model: label,
+		// 		as: 'rx'
+
+		// 	}
+		// ]
+	})
+
+	// return
+	// const rekomendasi = await model.manga.findAll({
+	// 	// where: {artikelId: id},
+	// 	// order: [['posisi','DESC']],
+	// 	include: ['mangaWithLabel']
+	// })
+	// res.json(rekomendasi)
+	// return
+
+	// console.log(rekomendasi);
 
 	const data = {
 		status: 'Not Found',

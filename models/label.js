@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   label.associate = function(models) {
     // associations can be defined here
-    label.belongsToMany(models.manga, {through: 'relabel',foreignKey: 'id_label', as: 'lm'})
+    label.belongsToMany(models.manga, {through: 'relabel',foreignKey: 'labelId', as: 'lm'})
   };
   return label;
 };

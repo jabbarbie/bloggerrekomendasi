@@ -23,11 +23,11 @@ router.get('/', async function(req, res, next) {
 
 router.get('/edit/(:id)', async function(req, res) {
 	const kategori = await model.label.findAll({order: ['id']})
-	const currentKategori = await model.relabel.findAll({attributes: ['id_label'], where: {id_manga: req.params.id}, order: ['id_label']})
+	const currentKategori = await model.relabel.findAll({attributes: ['labelId'], where: {mangaId: req.params.id}, order: ['labelId']})
 	
 	const current = []
 	currentKategori.forEach(e => {
-		current.push(e.id_label)
+		current.push(e.labelId)
 	})
 	const manga = await model.manga.findOne({where: {id: req.params.id}})
 	console.log(currentKategori);
@@ -83,7 +83,7 @@ router.post('/add', function(req, res) {
 			if(kategori.length > 0){
 				kategori.forEach((r,i) => {
 					console.log('perulnagan ', r);
-					d.push({id_kategori: r, id_manga: rl[0].id})
+					d.push({id_kategori: r, mangaId: rl[0].id})
 				})
 			}
 
@@ -127,7 +127,7 @@ router.post('/edit/', async function(req, res){
 	{
 		const k = []
 		kategori.forEach((r, i) => {
-			k.push({id_label:r , id_manga: id})
+			k.push({labelId:r , mangaId: id})
 		})
 		model.relabel.bulkCreate(k)
 		console.log(k);
@@ -137,13 +137,13 @@ router.post('/edit/', async function(req, res){
 
 router.post('/daftar', function(req,res) {
 	const {
-		id_manga,
-		id_artikel
+		mangaId,
+		artikelId
 	} = req.body
-	console.log('okokokok', id_manga, id_artikel);
+	console.log('okokokok', mangaId, artikelId);
 	model.rekomendasi.create({
-		id_artikel,
-		id_manga
+		artikelId,
+		mangaId
 	})
 	res.redirect('back')
 
@@ -151,10 +151,10 @@ router.post('/daftar', function(req,res) {
 
 /* kondisi = naik / turun
 **/
-router.get('/posisi/(:kondisi)/(:id_artikel)/(:id_rekomendasi)/(:posisinow)', async (req, res) => {
+router.get('/posisi/(:kondisi)/(:artikelId)/(:id_rekomendasi)/(:posisinow)', async (req, res) => {
 
 	const {
-		id_artikel,
+		artikelId,
 		id_rekomendasi,
 		posisinow,
 		kondisi
@@ -162,7 +162,7 @@ router.get('/posisi/(:kondisi)/(:id_artikel)/(:id_rekomendasi)/(:posisinow)', as
 
 
 	const rekomendasi = await model.rekomendasi.findOne({
-		where : {id_artikel: id_artikel },
+		where : {artikelId: artikelId },
 		order: [['posisi','DESC']]
 	})
 
@@ -176,7 +176,7 @@ router.get('/posisi/(:kondisi)/(:id_artikel)/(:id_rekomendasi)/(:posisinow)', as
 	else
 		 posisi = 1
 
-	const id_sebelumnya = await model.rekomendasi.findOne({ where: {id_artikel: id_artikel, posisi: posisi} })
+	const id_sebelumnya = await model.rekomendasi.findOne({ where: {artikelId: artikelId, posisi: posisi} })
 	const ubahposisi = await model.rekomendasi.update({
 		posisi
 	}, {

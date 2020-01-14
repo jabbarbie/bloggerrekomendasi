@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   post.associate = function(models) {
     // associations can be defined here
-    post.hasMany(models.rekomendasi, {as: 'pr'})
+    // post.hasMany(models.rekomendasi, {as: 'pr'})
   };
   return post;
 };

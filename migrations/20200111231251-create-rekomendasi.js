@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id_artikel: {
+      artikelId: {
         type: Sequelize.INTEGER,
         foreignKey: true,
         references: {
@@ -19,7 +19,7 @@ module.exports = {
       posisi: {
         type: Sequelize.INTEGER
       },
-      id_manga: {
+      mangaId: {
         type: Sequelize.INTEGER,
         foreignKey: true,
         references: {
