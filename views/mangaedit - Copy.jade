@@ -1,0 +1,58 @@
+extends layout
+
+block content
+  h1= title
+  div(class='row')
+   div(class='col-8')
+    form(action='/manga/edit', method='post')
+     input(type='hidden', name='id',value= data.data.id)
+
+     div(class='form-group')
+      input(class='form-control',name='judul', placeholder='Judul Manga / Manhua / Manhwa', value= data.data.judul, autofocus)
+
+     div(class='form-group')
+      select(name='type', class='form-control col-4', value= data.data.type)
+       each r, i in ['Manhua','Manhwa','Manga']
+        if(data.data.type == r)
+         option(value=r, selected)= r
+        else
+         option(value=r)= r
+
+     div(class='form-group')
+      input(class='form-control col-5',name='alternative_name', placeholder='Alternative Name', value= data.data.alternative_name)
+
+     div(class='form-group')
+      input(class='form-control col-2',name='chapter',placeholder='Chapter 100+', value= data.data.chapter)
+
+     div(class='form-group')
+      input(class='form-control col-5',name='review', placeholder='Review',value= data.data.review)
+
+     div(class='form-group')
+      input(class='form-control col-3 ',name='gambar', placeholder='Gambar',value= data.data.gambar)
+
+     div(class='form-group')
+      select(class='form-control', id='daftar',name='kategori', multiple='multiple')
+       each val, indexe in kategori
+        if(currentKategori.includes(val.id))
+         option(value=val.id, selected='selected')= val.label
+        else 
+         option(value=val.id)= val.label
+
+       
+
+     div(class='form-group')
+      textarea(class='form-control',name='keterangan',rows=10,)= data.data.keterangan
+
+
+     input(type='submit', value='Simpan', class='btn btn-sm btn-primary')
+     a(href='/', class='btn btn-warning btn-sm ml-1') Kembali
+
+   div(class='col-4')
+    if data.data.length > 0
+     ol
+      each val, index in data.data
+       li 
+        a(href='/manga/edit/' + val.id)= val.judul
+        a(href='/artikel/hapus/' + val.id, class='ml-2 text-danger') Hapus
+
+    

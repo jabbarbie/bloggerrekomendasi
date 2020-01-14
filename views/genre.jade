@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1= title
+  div(class='row')
+   div(class='col-8')
+    form(action='/genre/add', method='post')
+
+     div(class='form-group')
+      input(class='form-control',name='label', placeholder='Genre', autofocus)
+
+     input(type='submit', value='Simpan', class='btn btn-sm btn-primary')
+     a(href='/', class='btn btn-warning btn-sm ml-1') Kembali
+
+   div(class='col-4')
+    if data.data.length > 0
+     ol
+      each val, index in data.data
+       li 
+        a(href='/genre/edit/' + val.id)= val.label
+        a(href='/genre/hapus/' + val.id, class='ml-2 text-danger') Hapus
+
+    

@@ -1,0 +1,71 @@
+extends layout
+
+block content
+  h1= title
+  div(class='row')
+   div(class='col-8')
+    form(action='/manga/add', method='post')
+     input(type='hidden', name='id_artikel',value= id)
+
+     div(class='form-group')
+      input(class='form-control',name='judul', placeholder='Judul Manga / Manhua / Manhwa', autofocus)
+
+     div(class='form-group')
+      select(name='type', class='form-control col-4')
+       option(value='Manhua') Manhua-China
+       option(value='Manhwa') Manhwa-Korea
+       option(value='Manga') Manga
+
+     div(class='form-group')
+      input(class='form-control col-5',name='alternative_name', placeholder='Alternative Name')
+
+     div(class='form-group')
+      input(class='form-control col-2',name='chapter',placeholder='Chapter 100+')
+
+     div(class='form-group')
+      input(class='form-control col-5',name='review', placeholder='Review')
+
+     div(class='form-group')
+      input(class='form-control col-3 ',name='gambar', placeholder='Gambar')
+
+     div(class='form-group')
+      select(class='form-control', id='daftar',name='kategori', multiple='multiple')
+       each val, indexe in kategori
+        option(value=val.id)= val.label
+
+
+
+     div(class='form-group')
+      input(class='form-control col-3 ',name='bookmark', placeholder='Bookmark')
+
+     div(class='form-group')
+      input(class='form-control col-3 ',name='rating', placeholder='Rating')
+
+     div(class='form-group')
+      textarea(class='form-control',name='keterangan',rows=10)
+
+     input(type='submit', value='Simpan', class='btn btn-sm btn-primary')
+     a(href='/', class='btn btn-warning btn-sm ml-1') Kembali
+
+   div(class='col-4')
+    div(class='row')
+     if data.data.length > 0
+      ol
+       each val, index in data.data
+        li
+         if(val.review == '')
+          a(href='/manga/edit/' + val.id, class='text-warning')= val.judul
+         else
+          a(href='/manga/edit/' + val.id)= val.judul
+
+         if(val.gambar == '')
+          span(class='badge badge-sm badge-warning text-white ml-2') !pic
+         a(href='/manga/hapus/' + val.id, class='ml-2 text-danger') Hapus
+
+
+
+
+
+
+
+    

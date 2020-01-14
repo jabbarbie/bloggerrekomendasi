@@ -1,0 +1,20 @@
+extends layout
+
+block content
+ div(class='row')
+  div(class='col-8')
+   h1 Asadako
+   form(action='/artikel/add', method='POST')
+    div(class='form-group row')
+     input(type='text', name='judul', placeholder='Judul Artikel', size=30, class='form-control col-5')
+     input(type='submit', value='Simpan', class='btn btn-primary btn-sm ml-1')
+  
+    a(href='/manga',  class='btn btn-primary btn-sm') Daftar Manga
+    a(href='/genre', class='btn btn-primary btn-sm ml-2') Genre
+
+ div(class= 'row')
+  ol
+   each val, index in data.data
+    li 
+     a(href='/artikel/' + val.id)= val.judul
+

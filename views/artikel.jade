@@ -1,0 +1,101 @@
+extends layout
+
+block content
+  h1= title
+  div(class='row')
+   div(class='col-8')
+    form(action='/artikel/edit', method='post')
+     input(type='hidden', name='id',value= data.data.id)
+
+     div(class='form-group')
+      input(class='form-control',name='judul', placeholder='Judul Artikel', value= data.data.judul, autofocus)
+
+     div(class='form-group')
+      label(class='form-control-label') Pembuka
+      textarea(class='form-control textarea',name='opening',rows=10)
+       = data.data.opening
+
+
+     div(class='form-group')
+      label(class='form-control-label') Penutup
+      textarea(class='form-control textarea',name='ending',rows=5)
+       = data.data.ending
+
+
+     input(type='submit', value='Simpan', class='btn btn-sm btn-primary')
+     a(href='/', class='btn btn-warning btn-sm ml-1') Kembali
+
+   div(class='col-4')
+    div(class='row')
+      form(action='/manga/daftar', method='post')
+       input(type='hidden', name='id_artikel', value=data.data.id)
+       div(class='form-group')
+        select(class='form-control', id='daftar', name='id_manga')
+         each val, index in manga
+          option(value=val.id)= val.judul
+
+       div(class='form-group')
+        button(type='submit', class='btn btn-primary btn-sm btn-block') Add
+
+    div(class='row')
+     ol(reversed)
+      each val, index in rekomendasi
+       li
+        a(href='/manga/edit/' + val.manga.id)
+         = val.manga.judul
+        span(class='badge badge-sm badge-info ml-2')= val.manga.bookmark 
+        span(class='badge badge-sm badge-info ml-2')= (val.manga.rating / 100) 
+        if(val.manga.gambar == '') 
+         span(class='badge badge-warning badge-sm text-white ml-1') !Pic 
+        if(val.manga.keterangan == '') 
+         span(class='badge badge-danger badge-sm text-white ml-1') !Ket
+
+        if(index != 0)
+         a(href=`/manga/posisi/up/${data.data.id}/${val.id}/${val.posisi}` ,class='badge badge-primary ml-1') Up 
+
+        if(index < (rekomendasi.length - 1) )  
+         a(href=`/manga/posisi/down/${data.data.id}/${val.id}/${val.posisi}` ,class='badge badge-secondary ml-1') Down 
+
+    div(class='row')
+     textarea(class='form-control', rows=30)
+      = data.data.opening 
+      &#13;&#10;
+      ol(class="rekomendasi", reversed="")&#13;&#10;
+       each r, index in rekomendasi
+        li= r.manga.judul 
+        &#13;&#10;
+        = r.manga.keterangan
+        &#13;&#10;
+        div(id='detail')
+         &#13;&#10;
+         img(class='lazy' data-src=r.manga.gambar src='https://4.bp.blogspot.com/-XVELyLZSaIU/XcMk8mvq7ZI/AAAAAAAAQNY/IzxmEpCaSNc5emnoGLAxldK8EBBqVfNVwCNcBGAsYHQ/s1600/putih.png')
+
+         br
+
+         table(class='informasi', width='70%') &#13;&#10;
+          tr &#13;&#10;
+           td(width='30%') Alternative Name 
+           td= r.manga.alternative_name
+          tr &#13;&#10;
+           td Type
+           td= r.manga.type
+          tr &#13;&#10;
+           td Genre
+           td= r.manga.relabel
+          tr &#13;&#10;
+           td Chapter
+           td= r.manga.chapter
+          tr &#13;&#10;
+           td Review
+           td= r.manga.review
+          tr &#13;&#10;
+           td Rating
+           td= (r.manga.rating / 100)
+
+          &#13;&#10;
+         &#13;&#10;
+        &#13;&#10;
+
+       &#13;&#10;
+      = data.data.ending
+
